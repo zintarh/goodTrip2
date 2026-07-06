@@ -1,0 +1,13 @@
+"""
+One row per wallet address. Aggregates PlayerRegistry (identity) and
+ScoreRegistry (points) events so the leaderboard is a single sorted query
+instead of scanning raw event logs.
+"""
+type Player @entity(immutable: false) {
+  id: ID! # lowercase wallet address
+  username: String
+  registeredAt: BigInt
+  totalScore: BigInt!
+  gamesPlayed: Int!
+  lastScoreAt: BigInt
+}

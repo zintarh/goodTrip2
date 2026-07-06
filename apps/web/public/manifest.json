@@ -1,0 +1,21 @@
+{
+  "name": "GoodTrip",
+  "short_name": "GoodTrip",
+  "description": "Community geo-guessing game on the GoodDollar ecosystem",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#7C3AED",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

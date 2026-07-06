@@ -1,0 +1,17 @@
+{
+  "name": "goodtrip",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail \"pnpm --filter web dev\" \"npx convex dev\"",
+    "build": "pnpm --filter web build",
+    "test": "forge test --root contracts"
+  },
+  "dependencies": {
+    "convex": "^1.17.4",
+    "viem": "^2.21.58"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

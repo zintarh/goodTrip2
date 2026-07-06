@@ -1,0 +1,14 @@
+{
+  "name": "goodtrip-subgraph",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "goldsky subgraph deploy goodtrip/1.0.0 --path ."
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.98.1",
+    "@graphprotocol/graph-ts": "^0.38.2"
+  }
+}

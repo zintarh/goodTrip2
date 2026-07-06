@@ -1,0 +1,8 @@
+{
+  "name": "@goodtrip/convex",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "convex": "^1.17.4"
+  }
+}

@@ -1,0 +1,46 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PlayerRegistry
+    network: celo
+    source:
+      address: "0x3E207823ae35156AeF184Ecd0535768aa3549ABD" # PlayerRegistry proxy (Celo mainnet)
+      abi: PlayerRegistry
+      startBlock: 71441431 # Celo mainnet deploy block
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Player
+      abis:
+        - name: PlayerRegistry
+          file: ./abis/PlayerRegistry.json
+      eventHandlers:
+        - event: PlayerRegistered(indexed address,string,uint256)
+          handler: handlePlayerRegistered
+        - event: UsernameUpdated(indexed address,string,string)
+          handler: handleUsernameUpdated
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: ScoreRegistry
+    network: celo
+    source:
+      address: "0x66470EFe0BEaeD1936a663082fBf11C040DC4Afc" # ScoreRegistry proxy (Celo mainnet)
+      abi: ScoreRegistry
+      startBlock: 71441431 # Celo mainnet deploy block
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Player
+      abis:
+        - name: ScoreRegistry
+          file: ./abis/ScoreRegistry.json
+      eventHandlers:
+        - event: ScoreRecorded(indexed address,indexed bytes32,uint256)
+          handler: handleScoreRecorded
+      file: ./src/mapping.ts

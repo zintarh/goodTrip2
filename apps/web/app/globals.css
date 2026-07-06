@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet CSS override — must be imported globally */
+@import "leaflet/dist/leaflet.css";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #fff;
+}
+
+::selection {
+  background: #7C3AED;
+  color: #fff;
+}
+
+@keyframes score-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-score-pop {
+  animation: score-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes float-bounce {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50%      { transform: translateY(-18px) rotate(6deg); }
+}
+
+.animate-float {
+  animation: float-bounce 2.2s ease-in-out infinite;
+}
+
+@keyframes walk-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%      { transform: translateY(-7px) rotate(1.5deg); }
+}
+
+.animate-walk-bob {
+  animation: walk-bob 0.55s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(0.8); opacity: 0.5; }
+}
+
+.animate-logo-pulse {
+  animation: logo-pulse 0.9s ease-in-out infinite;
+}
+
+@layer components {
+  /* Duolingo-style 3D button: solid color with a darker "depth" edge that
+     collapses on press, rather than a shadow. */
+  .btn-duo-primary {
+    @apply rounded-2xl bg-brand-purple text-white font-extrabold py-3.5 px-6 border-b-4 border-brand-purpleDark
+           transition-all active:border-b-0 active:translate-y-1 hover:brightness-105
+           disabled:opacity-40 disabled:pointer-events-none disabled:active:border-b-4 disabled:active:translate-y-0;
+  }
+
+  .btn-duo-outline {
+    @apply rounded-2xl bg-white text-black font-extrabold py-3.5 px-6 border-2 border-b-4 border-gray-200
+           transition-all active:border-b-2 active:translate-y-0.5 hover:bg-gray-50
+           disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .card-duo {
+    @apply bg-white rounded-3xl border-2 border-gray-100;
+  }
+}
