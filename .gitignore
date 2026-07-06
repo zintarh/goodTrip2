@@ -1,7 +1,8 @@
 node_modules/
 .next/
 .convex/
-convex/_generated/
+# convex/_generated is committed on purpose: the web app imports
+# @convex/_generated/api at build time, and Vercel doesn't run codegen.
 dist/
 out/
 .env

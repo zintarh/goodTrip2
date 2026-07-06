@@ -107,15 +107,42 @@ function InnerProvider({ children }: { children: React.ReactNode }) {
   }, [isConnected, provider]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function login(): Promise<boolean> {
-    const conn = await connect();
-    if (!conn?.ethereumProvider) return false;
-    // Resolve directly from the just-returned provider instead of waiting on
-    // the reactive effect above — removes a whole class of "connected but
-    // address never resolved" timing races.
-    const { address: addr, error } = await resolveAddressWithRetry(conn.ethereumProvider);
-    setAddress(addr);
-    setAddressError(error);
-    return addr !== null;
+    // Already have a live session (persisted from a previous visit, or the
+    // connector is already connected). Calling connect() again throws
+    // "WalletLoginError: Already connected", so resolve from the existing
+    // provider and treat it as a successful login instead of re-connecting.
+    if (isConnected && provider) {
+      const { address: addr, error } = await resolveAddressWithRetry(provider);
+      setAddress(addr);
+      setAddressError(error);
+      return addr !== null;
+    }
+
+    try {
+      const conn = await connect();
+      if (!conn?.ethereumProvider) return false;
+      // Resolve directly from the just-returned provider instead of waiting on
+      // the reactive effect above — removes a whole class of "connected but
+      // address never resolved" timing races.
+      const { address: addr, error } = await resolveAddressWithRetry(conn.ethereumProvider);
+      setAddress(addr);
+      setAddressError(error);
+      return addr !== null;
+    } catch (err) {
+      // Guard above can miss a session that raced into existence (or one the
+      // SDK holds while our React `isConnected` is briefly stale). In that
+      // case connect() throws "Already connected" — recover by reading the
+      // current provider rather than surfacing a scary error to the user.
+      const message = err instanceof Error ? err.message : String(err);
+      const activeProvider = provider ?? connection?.ethereumProvider ?? null;
+      if (/already connected/i.test(message) && activeProvider) {
+        const { address: addr, error } = await resolveAddressWithRetry(activeProvider);
+        setAddress(addr);
+        setAddressError(error);
+        return addr !== null;
+      }
+      throw err;
+    }
   }
 
   return (

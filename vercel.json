@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx convex deploy --cmd 'pnpm --filter web build' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL",
+  "buildCommand": "pnpm --filter web build",
   "installCommand": "pnpm install",
   "outputDirectory": "apps/web/.next"
 }
