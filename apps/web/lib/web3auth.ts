@@ -1,10 +1,7 @@
 import type { Web3AuthContextConfig } from "@web3auth/modal/react";
 import { WEB3AUTH_NETWORK } from "@web3auth/modal";
 
-// GoodTrip runs on Celo mainnet only. We configure ONLY this chain (no
-// Ethereum/Sepolia/testnet) and pin it as defaultChainId, so the embedded
-// wallet can never silently land the user on a different network — which is
-// what caused the earlier ChainMismatchError when submitting scores.
+
 const CELO_CHAIN = {
   chainNamespace: "eip155" as const,
   chainId: "0xa4ec", // 42220 — Celo Mainnet
